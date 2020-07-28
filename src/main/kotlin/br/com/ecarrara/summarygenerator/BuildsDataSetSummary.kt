@@ -33,6 +33,7 @@ inline fun List<BuildInfo>.summarizeBy(
     crossinline keySelector: (BuildInfo) -> String
 ): Collection<BuildSummarizedData> {
     return asSequence()
+        .filter { !it.wasAborted && !it.wasError }
         .groupBy(keySelector)
         .mapValues { (key, buildsInfo) ->
             BuildSummarizedData(
