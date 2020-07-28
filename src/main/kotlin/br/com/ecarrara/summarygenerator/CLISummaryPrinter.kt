@@ -1,6 +1,7 @@
 package br.com.ecarrara.summarygenerator
 
 import br.com.ecarrara.utils.format
+import br.com.ecarrara.utils.formatAsRate
 import java.time.LocalDateTime
 
 fun BuildsDataSetSummary.print() {
@@ -12,7 +13,11 @@ fun BuildsDataSetSummary.print() {
     +----------------------------------------------------------------------------+
       Date Generated: ${LocalDateTime.now()}                                                        
       Number of Builds Analyzed: $buildsAnalysed builds                          
-      Average Build Time: ${averageOfAllBuilds.format(1)} minutes                                                   
+      Average Build Time: ${averageOfAllBuilds.format(1)} minutes
+      Number of Failed Builds: $numberOfFailedBuilds builds
+      Build Failure Rate: ${failedBuildsRate.formatAsRate()}
+      Number of Aborted Builds: $numberOfAbortedBuilds builds
+      Build Abortion Rate: ${abortedBuildsRate.formatAsRate()}
     +----------------------------------------------------------------------------+                                                                            
       Averages over Weekdays:
       ${daysOfTheWeekSummarizedData.joinToString("\n      ")}

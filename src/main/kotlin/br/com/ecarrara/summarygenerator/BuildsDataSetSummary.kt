@@ -23,6 +23,10 @@ data class BuildsDataSetSummary(
     val daysOfTheWeekSummarizedData: Collection<BuildSummarizedData> =
         buildsInfo.summarizeBy { it.startedAtDayOfTheWeek }
     val workflowsSummarizedData: Collection<BuildSummarizedData> = buildsInfo.summarizeBy { it.triggeredWorkflow }
+    val numberOfFailedBuilds = buildsInfo.count { it.wasError }
+    val failedBuildsRate: Double = numberOfFailedBuilds / buildsInfo.size.toDouble()
+    val numberOfAbortedBuilds = buildsInfo.count { it.wasAborted }
+    val abortedBuildsRate: Double = numberOfAbortedBuilds / buildsInfo.size.toDouble()
 }
 
 inline fun List<BuildInfo>.summarizeBy(

@@ -18,4 +18,10 @@ data class BuildInfo(
     val startedAtDayOfTheWeek: String = triggeredAt?.dayOfWeek.displayName,
     val waitingTimeInMinutes: Long = calculateDurationInMinutes(triggeredAt, startedOnWorkerAt),
     val buildTimeInMinutes: Long = calculateDurationInMinutes(startedOnWorkerAt, finishedAt)
-)
+) {
+    val wasAborted: Boolean
+        get() = status == "aborted"
+
+    val wasError: Boolean
+        get() = status == "error"
+}
