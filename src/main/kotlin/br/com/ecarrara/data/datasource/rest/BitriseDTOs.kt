@@ -13,6 +13,7 @@ data class BitriseResponse(
 data class BuildInfo(
     @Json(name = "build_number") val buildNumber: Long?,
     @Json(name = "triggered_at") val triggeredAt: String?,
+    @Json(name = "triggered_workflow") val triggeredWorkflow: String?,
     @Json(name = "started_on_worker_at") val startedOnWorkerAt: String?,
     @Json(name = "environment_prepare_finished_at") val environmentPrepareFinishedAt: String?,
     @Json(name = "finished_at") val finishedAt: String?,

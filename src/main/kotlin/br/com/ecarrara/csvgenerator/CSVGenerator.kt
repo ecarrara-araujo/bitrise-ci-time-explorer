@@ -19,7 +19,8 @@ private const val CSV_FILE_HEADERS = "build_number," +
         "finished_at," +
         "waiting_time_minutes," +
         "build_time_minutes," +
-        "start_at_weekday"
+        "start_at_weekday," +
+        "triggered_workflow"
 
 fun generateCSVFor(builds: List<BuildInfo>) {
     File(CSV_FILE).bufferedWriter().use { out ->
@@ -33,7 +34,7 @@ private fun BuildInfo.getCSVLine(): String {
             "$pullRequestId,$pullRequestTargetBranch," +
             "$triggeredAt,$startedOnWorkerAt,$environmentPrepareFinishedAt," +
             "$finishedAt,$waitingTimeInMinutes,$buildTimeInMinutes," +
-            startedAtDayOfTheWeek
+            "$startedAtDayOfTheWeek,$triggeredWorkflow"
 }
 
 private val BuildInfo.startedAtDayOfTheWeek: String
