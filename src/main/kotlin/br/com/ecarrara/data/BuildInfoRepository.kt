@@ -4,6 +4,8 @@ import br.com.ecarrara.core.networking.createRestService
 import br.com.ecarrara.data.datasource.rest.BitriseResponseDto
 import br.com.ecarrara.data.datasource.rest.BitriseRestService
 import br.com.ecarrara.data.datasource.rest.BuildInfoDto
+import br.com.ecarrara.data.datasource.rest.toEntity
+import br.com.ecarrara.domain.entities.BuildInfo
 import java.time.LocalDate
 import java.time.ZoneId
 
@@ -11,7 +13,7 @@ class BuildInfoRepository(
     private val bitriseRestService: BitriseRestService = createRestService(BitriseRestService::class.java)
 ) {
 
-    suspend fun getPreviousAmountOfBuilds(numberOfBuildsToFetch: Long): List<BuildInfoDto> {
+    suspend fun getPreviousAmountOfBuilds(numberOfBuildsToFetch: Long): List<BuildInfo> {
         val allFetchedBuilds = mutableListOf<BuildInfoDto>()
 
         val initialResponse = getBuilds(LocalDate.now())
@@ -27,7 +29,9 @@ class BuildInfoRepository(
             currentCursor = nextResponse.pagingInfoDto.nextPageCursor
             if (currentCursor.isNullOrBlank()) break
         }
-        return allFetchedBuilds.take(numberOfBuildsToFetch.toInt())
+        return allFetchedBuilds
+            .take(numberOfBuildsToFetch.toInt())
+            .map { it.toEntity() }
     }
 
     private suspend fun getBuilds(beforeDate: LocalDate? = null, nextCursor: String = ""): BitriseResponseDto {
