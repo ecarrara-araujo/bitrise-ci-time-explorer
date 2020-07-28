@@ -14,5 +14,5 @@ interface BitriseRestService {
         @Query("limit") maxItemsPerPage: Int = 50,
         @Query("next") nextCursor: String = "",
         @Query("sorted_by") sortedBy: String = "created_at"
-    ): BitriseResponse
+    ): BitriseResponseDto
 }

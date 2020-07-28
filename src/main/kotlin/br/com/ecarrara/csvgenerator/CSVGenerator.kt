@@ -1,6 +1,6 @@
 package br.com.ecarrara.csvgenerator
 
-import br.com.ecarrara.data.datasource.rest.BuildInfo
+import br.com.ecarrara.data.datasource.rest.BuildInfoDto
 import java.io.File
 import java.time.Duration
 import java.time.LocalDateTime
@@ -22,14 +22,14 @@ private const val CSV_FILE_HEADERS = "build_number," +
         "start_at_weekday," +
         "triggered_workflow"
 
-fun generateCSVFor(builds: List<BuildInfo>) {
+fun generateCSVFor(buildDtos: List<BuildInfoDto>) {
     File(CSV_FILE).bufferedWriter().use { out ->
         out.write("$CSV_FILE_HEADERS\n")
-        builds.forEach { out.write("${it.getCSVLine()}\n") }
+        buildDtos.forEach { out.write("${it.getCSVLine()}\n") }
     }
 }
 
-private fun BuildInfo.getCSVLine(): String {
+private fun BuildInfoDto.getCSVLine(): String {
     return "$buildNumber,$status," +
             "$pullRequestId,$pullRequestTargetBranch," +
             "$triggeredAt,$startedOnWorkerAt,$environmentPrepareFinishedAt," +
@@ -37,13 +37,13 @@ private fun BuildInfo.getCSVLine(): String {
             "$startedAtDayOfTheWeek,$triggeredWorkflow"
 }
 
-private val BuildInfo.startedAtDayOfTheWeek: String
+private val BuildInfoDto.startedAtDayOfTheWeek: String
     get() {
         val triggeredAtDateTime = LocalDateTime.parse(triggeredAt, DateTimeFormatter.ISO_ZONED_DATE_TIME)
         return triggeredAtDateTime.dayOfWeek.getDisplayName(TextStyle.FULL, Locale.ENGLISH)
     }
 
-private val BuildInfo.waitingTimeInMinutes: Long
+private val BuildInfoDto.waitingTimeInMinutes: Long
     get() {
         return if (triggeredAt != null && startedOnWorkerAt != null) {
             val triggeredAtDateTime = LocalDateTime.parse(triggeredAt, DateTimeFormatter.ISO_ZONED_DATE_TIME)
@@ -56,7 +56,7 @@ private val BuildInfo.waitingTimeInMinutes: Long
         }
     }
 
-private val BuildInfo.buildTimeInMinutes: Long
+private val BuildInfoDto.buildTimeInMinutes: Long
     get() {
         return if (startedOnWorkerAt != null && finishedAt != null) {
             val startedOnWorkerAtDateTime =

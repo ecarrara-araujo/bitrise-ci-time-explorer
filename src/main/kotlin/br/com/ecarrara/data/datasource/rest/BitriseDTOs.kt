@@ -4,13 +4,13 @@ import com.squareup.moshi.Json
 import com.squareup.moshi.JsonClass
 
 @JsonClass(generateAdapter = true)
-data class BitriseResponse(
-    @Json(name = "data") val builds: List<BuildInfo>,
-    @Json(name = "paging") val pagingInfo: PagingInfo
+data class BitriseResponseDto(
+    @Json(name = "data") val buildDtos: List<BuildInfoDto>,
+    @Json(name = "paging") val pagingInfoDto: PagingInfoDto
 )
 
 @JsonClass(generateAdapter = true)
-data class BuildInfo(
+data class BuildInfoDto(
     @Json(name = "build_number") val buildNumber: Long?,
     @Json(name = "triggered_at") val triggeredAt: String?,
     @Json(name = "triggered_workflow") val triggeredWorkflow: String?,
@@ -24,7 +24,7 @@ data class BuildInfo(
 )
 
 @JsonClass(generateAdapter = true)
-data class PagingInfo(
+data class PagingInfoDto(
     @Json(name = "total_item_count") val totalItemCount: Long?,
     @Json(name = "page_item_limit") val pageItemLimit: Int?,
     @Json(name = "next") val nextPageCursor: String?
