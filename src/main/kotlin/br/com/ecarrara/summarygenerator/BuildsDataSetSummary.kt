@@ -11,7 +11,7 @@ data class BuildSummarizedData(
 ) {
     override fun toString(): String {
         return "- $identifier: ${averageWaitTimeInMinutes.format(1)} mins waiting / " +
-        "${averageBuildTimeInMinutes.format(1)} mins building / $numberOfBuilds builds"
+        "${averageBuildTimeInMinutes.format(1)} mins running / $numberOfBuilds builds"
     }
 }
 
