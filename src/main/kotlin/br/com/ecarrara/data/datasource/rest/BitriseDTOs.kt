@@ -15,6 +15,7 @@ data class BuildInfo(
     @Json(name = "triggered_at") val triggeredAt: String?,
     @Json(name = "started_on_worker_at") val startedOnWorkerAt: String?,
     @Json(name = "environment_prepare_finished_at") val environmentPrepareFinishedAt: String?,
+    @Json(name = "finished_at") val finishedAt: String?,
     @Json(name = "status_text") val status: String?,
     @Json(name = "abort_reason") val abortReason: String?,
     @Json(name = "pull_request_id") val pullRequestId: Long?,
